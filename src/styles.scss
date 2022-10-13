@@ -1,1 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+$primary: #061f37;
+$secondary: #84dd63;
+$accent: #f5efed;
+$dark: #041525;
+$danger: #de6449;
+$light: $accent;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "accent": $accent,
+  "dark": $dark,
+  "success": $secondary,
+  "info": $light,
+  "warning": $danger,
+  "danger": $danger,
+  "light": $light,
+);
+
+$border-color: $secondary;
+
+$body-bg: $dark;
+$body-color: $accent;
+
+$color-contrast-dark: $dark;
+$color-contrast-light: $accent;
+
+@import "node_modules/bootstrap/scss/bootstrap.scss";

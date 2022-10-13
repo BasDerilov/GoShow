@@ -1,0 +1,57 @@
+<form>
+  <div class="input-group mb-3">
+    <input
+      class="form-control border-secondary"
+      placeholder="search by name..."
+      type="text"
+      aria-describedby="search-button"
+    />
+    <span id="search-button" class="btn btn-outline-secondary btn-lg"
+      ><fa-icon [icon]="searchIcon"></fa-icon
+    ></span>
+  </div>
+  <div class="input-group d-flex justify-content-center">
+    <div class="btn-group">
+      <input
+        type="radio"
+        class="btn-check"
+        name="categories"
+        id="movies-option"
+        autocomplete="off"
+        checked
+      />
+      <label class="btn btn-outline-secondary" for="movies-option"
+        >Movies</label
+      >
+
+      <input
+        type="radio"
+        class="btn-check"
+        name="categories"
+        id="TV-option"
+        autocomplete="off"
+      />
+      <label class="btn btn-outline-secondary" for="TV-option">TV Shows</label>
+
+      <input
+        type="radio"
+        class="btn-check"
+        name="categories"
+        id="actors-option"
+        autocomplete="off"
+      />
+      <label class="btn btn-outline-secondary" for="actors-option"
+        >Actors</label
+      >
+
+      <input
+        type="radio"
+        class="btn-check"
+        name="categories"
+        id="all-option"
+        autocomplete="off"
+      />
+      <label class="btn btn-outline-secondary" for="all-option">All</label>
+    </div>
+  </div>
+</form>
