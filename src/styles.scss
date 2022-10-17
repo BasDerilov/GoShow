@@ -4,6 +4,7 @@ $accent: #f5efed;
 $dark: #041525;
 $danger: #de6449;
 $light: $accent;
+$warning: #fca311;
 
 $theme-colors: (
   "primary": $primary,
@@ -12,7 +13,7 @@ $theme-colors: (
   "dark": $dark,
   "success": $secondary,
   "info": $light,
-  "warning": $danger,
+  "warning": $warning,
   "danger": $danger,
   "light": $light,
 );

@@ -15,11 +15,13 @@ import { SuggestedComponent } from './home/suggested/suggested.component';
 import { LoginComponent } from './login/login.component';
 import { JwtInterceptor } from './interceptors/jwt-interceptor';
 import { ApiTokenInterceptor } from './interceptors/api-token-interceptor';
-import { AuthErrorInterceptor } from './interceptors/auth-error-iterceptor';
 import { UserComponent } from './user/user.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { MovieCardComponent } from './browse/movie-card/movie-card.component';
+import { FilterComponent } from './browse/filter/filter.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,9 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     SuggestedComponent,
     LoginComponent,
     UserComponent,
+    PageNotFoundComponent,
+    MovieCardComponent,
+    FilterComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,7 +50,6 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ApiTokenInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

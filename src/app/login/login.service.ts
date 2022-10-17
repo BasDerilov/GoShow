@@ -72,4 +72,10 @@ export class LoginService {
       }
     );
   }
+
+  logout(validSessionId: string) {
+    return this._http.delete(this.BASE_URL + 'authentication/session', {
+      body: { session_id: validSessionId },
+    });
+  }
 }

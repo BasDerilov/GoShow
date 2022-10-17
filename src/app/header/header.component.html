@@ -17,7 +17,7 @@
           *ngIf="!currentUser"
           >Log in</a
         >
-        <div class="btn-group" dropdown>
+        <div class="btn-group" dropdown *ngIf="currentUser">
           <button
             id="button-animated"
             dropdownToggle
@@ -25,28 +25,33 @@
             class="btn btn-outline-secondary dropdown-toggle"
             aria-controls="dropdown-animated"
           >
-            {{ currentUser?.username }} <span class="caret"></span>
+            {{ currentUser.username }} <span class="caret"></span>
           </button>
           <ul
             id="dropdown-animated"
             *dropdownMenu
-            class="dropdown-menu"
+            class="dropdown-menu bg-primary dropdown-menu-dark"
             role="menu"
             aria-labelledby="button-animated"
           >
             <li role="menuitem">
               <a
-                [routerLink]="['user', currentUser?.username]"
-                class="nav-link text-secondary"
+                style="cursor: pointer"
+                [routerLink]="['user', currentUser.username]"
+                class="dropdown-item text-secondary"
                 [routerLinkActive]="['disabled', 'visually-hidden']"
-                >{{ currentUser?.username }}</a
+                >Profile</a
               >
             </li>
+
             <li role="menuitem">
-              <a class="dropdown-item" href="#">Another action</a>
-            </li>
-            <li role="menuitem">
-              <a class="dropdown-item" href="#">Something else here</a>
+              <a
+                style="cursor: pointer"
+                class="dropdown-item text-secondary"
+                [routerLink]="['home']"
+                (click)="onLogout()"
+                >Log out</a
+              >
             </li>
           </ul>
         </div>

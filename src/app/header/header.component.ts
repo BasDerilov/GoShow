@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { LoginComponent } from '../login/login.component';
 import { LoginService } from '../login/login.service';
+import { LocalService } from '../shared/local.service';
 import { User } from '../user/user.model';
 import { UserService } from '../user/user.service';
 
@@ -17,9 +19,11 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this._userService.userSubj.subscribe((user) => {
-      if (user) {
-        this.currentUser = user;
-      }
+      this.currentUser = user;
     });
+  }
+
+  onLogout() {
+    this._userService.logOutUser();
   }
 }

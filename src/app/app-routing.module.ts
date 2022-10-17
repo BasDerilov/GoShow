@@ -3,7 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { BrowseComponent } from './browse/browse.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
-import { AuthGuardService } from './shared/auth-guard.service';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { LoggedInGuardService } from './shared/logged-in-guard.service';
 import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
@@ -13,12 +14,17 @@ const routes: Routes = [
   {
     path: 'user/:username',
     component: UserComponent,
-    canActivate: [AuthGuardService],
+    canActivate: [LoggedInGuardService],
     pathMatch: 'prefix',
   },
   {
     path: 'browse',
     component: BrowseComponent,
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    component: PageNotFoundComponent,
   },
 ];
 

@@ -1,3 +1,4 @@
+import { User } from './user.model';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from './user.service';
 
@@ -7,13 +8,15 @@ import { UserService } from './user.service';
   styleUrls: ['./user.component.scss'],
 })
 export class UserComponent implements OnInit {
-  username = '';
+  username: string | undefined;
 
   constructor(private _userService: UserService) {}
 
   ngOnInit(): void {
     this._userService.userSubj.subscribe((user) => {
-      this.username = user.username;
+      if (user) {
+        this.username = user.username;
+      }
     });
   }
 }

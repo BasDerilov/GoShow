@@ -11,6 +11,7 @@ import { LoginService } from './login.service';
 })
 export class LoginComponent implements OnInit {
   credentialsValid = true;
+  isLoading = false;
 
   loginForm = new FormGroup({
     username: new FormControl('', Validators.required),
@@ -33,15 +34,21 @@ export class LoginComponent implements OnInit {
   onLogin(loginForm: FormGroup) {
     const username = loginForm.get('username')?.value;
     const password = loginForm.get('password')?.value;
+    const remember = loginForm.get('rememberMe')?.value;
+    this.isLoading = true;
 
     this._login.login(username, password).subscribe((loginResult) => {
+      this.isLoading = false;
       if (loginResult.success) {
         this.credentialsValid = true;
 
-        this._userService.userSubj.next({
-          username: username,
-          sessionId: loginResult.sessionId!,
-        });
+        this._userService.logInUser(
+          {
+            username: username,
+            sessionId: loginResult.sessionId!,
+          },
+          remember
+        );
 
         this._router.navigate(['home']);
       } else {

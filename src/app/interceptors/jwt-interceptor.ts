@@ -16,7 +16,9 @@ export class JwtInterceptor implements HttpInterceptor {
 
   constructor(private _userService: UserService) {
     this._userService.userSubj.subscribe((user) => {
-      this.sessionId = user.sessionId;
+      if (user) {
+        this.sessionId = user.sessionId;
+      }
     });
   }
 
