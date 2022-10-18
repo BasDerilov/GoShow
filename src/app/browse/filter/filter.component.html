@@ -1,18 +1,136 @@
-<form [formGroup]="filterForm" (submit)="onSubmit()">
-  <div class="row">
-    <div class="col-2">
-      <label for="genre-select">Genre:</label>
-      <select
-        name="genre-select"
-        formControlName="genre"
-        *ngIf="genres"
-        class="form-control form-select form-select-sm"
-      >
-        <option *ngFor="let genre of genres" [value]="genre.id">
-          {{ genre.name }}
-        </option>
-      </select>
+<form [formGroup]="filterForm" (submit)="onSubmit(filterForm)">
+  <div class="mb-3" [collapse]="isColapsed" [isAnimated]="true">
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 g-2 mb-2">
+      <div>
+        <div class="input-group">
+          <span class="input-group-text text-bg-secondary">Genres</span>
+          <select
+            name="genre-select"
+            *ngIf="genres"
+            class="form-control form-select"
+          >
+            <option selected>Choose...</option>
+            <option
+              *ngFor="let genre of genres"
+              (click)="addToGenres(genre)"
+              [value]="genre.id"
+            >
+              {{ genre.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <div class="input-group" *ngIf="yearRange">
+          <span class="input-group-text text-bg-secondary">from</span>
+          <select
+            formControlName="yearRangeStart"
+            class="form-control form-select"
+          >
+            <option *ngFor="let year of yearRange" [value]="year">
+              {{ year }}
+            </option>
+          </select>
+          <span class="input-group-text text-bg-secondary">to</span>
+          <select
+            formControlName="yearRangeEnd"
+            class="form-control form-select"
+          >
+            <option *ngFor="let year of yearRange" [value]="year">
+              {{ year }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <div class="input-group">
+          <span class="input-group-text text-bg-secondary">Rating between</span>
+          <select
+            formControlName="ratingRangeStart"
+            class="form-control form-select"
+          >
+            <option *ngFor="let rating of ratingRange" [value]="rating">
+              {{ rating }}
+            </option>
+          </select>
+          <span class="input-group-text text-bg-secondary">and</span>
+          <select
+            formControlName="ratingRangeEnd"
+            class="form-control form-select"
+          >
+            <option
+              *ngFor="let rating of ratingRange.reverse()"
+              [value]="rating"
+            >
+              {{ rating }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="btn-group">
+        <div class="input-group">
+          <span class="input-group-text text-bg-secondary">Actors</span>
+          <div class="form-control p-0 search-bar bg-body text-primary">
+            <ng-autocomplete
+              class="text-bg-dark"
+              placeholder="Search actors"
+              (inputChanged)="onChangeSearch($event)"
+              [data]="actorsNames"
+              [itemTemplate]="itemTeplate"
+              [notFoundTemplate]="notFoundTemplate"
+              (selected)="onAddActor($event); actorsMenu.clear()"
+              #actorsMenu
+            ></ng-autocomplete>
+
+            <ng-template #itemTeplate let-item>
+              <a [innerHTML]="item"></a>
+            </ng-template>
+
+            <ng-template
+              class="border-secondary"
+              #notFoundTemplate
+              let-notFound
+            >
+              <div class="border-0" innerHTML="notFound">
+                <span class="text-danger">We couldn't find that person</span>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
     </div>
-    <input type="submit" class="btn btn-outline-secondary" value="Search" />
+    <div class="row mb-3 g-2">
+      <div class="col-12">
+        <div class="btn-group">
+          <button
+            class="btn btn-outline-teretriary btn-sm genre-button"
+            *ngFor="let genre of selectedGenres.controls"
+            (click)="removeFromGenres(genre.value)"
+          >
+            {{ genre.value["name"] }}
+          </button>
+        </div>
+      </div>
+      <div class="col">
+        <div class="btn-group">
+          <button
+            class="btn btn-outline-danger btn-sm genre-button"
+            *ngFor="let actor of selectedActors.controls"
+            (click)="removeFromActors(actor.value)"
+          >
+            {{ actor.value["name"] }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="d-flex justify-content-center">
+        <input
+          type="submit"
+          class="btn btn-outline-secondary btn-lg"
+          value="Search"
+        />
+      </div>
+    </div>
   </div>
 </form>

@@ -1,9 +1,21 @@
-<div class="container-fluid">
-  <div class="row">
-    <app-filter></app-filter>
+<div>
+  <div>
+    <app-filter #filters></app-filter>
+    <div class="d-grid gap-2">
+      <button
+        type="button"
+        (click)="filters.isColapsed = !filters.isColapsed"
+        class="btn btn-outline-secondary"
+      >
+        Filters <fa-icon [icon]="filterIcon"></fa-icon>
+      </button>
+    </div>
   </div>
   <div class="row">
-    <div *ngFor="let movie of movies" class="col-sm-5 col-md-4 col-lg-3 p-2">
+    <div
+      *ngFor="let movie of movies"
+      class="col-4 col-md-3 col-xl-2 p-1 p-md-2"
+    >
       <app-movie-card *ngIf="movie" [movie]="movie"></app-movie-card>
     </div>
   </div>

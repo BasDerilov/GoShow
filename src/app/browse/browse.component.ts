@@ -2,6 +2,7 @@ import { Movie } from './../shared/movie.model';
 import { BrowseService } from './browse.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-browse',
@@ -10,12 +11,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class BrowseComponent implements OnInit {
   movies?: Movie[];
+  filterIcon = faFilter;
 
   constructor(private route: ActivatedRoute, private browse: BrowseService) {}
 
   ngOnInit(): void {
-    this.browse.load().subscribe((movies) => {
-      this.movies = movies.results;
+    this.browse.page.subscribe((page) => {
+      this.movies = page.results;
     });
   }
 }

@@ -27,8 +27,9 @@ export class JwtInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     if (this._userService.isLoggedIn) {
+      const newParams = req.params.append('session_id', this.sessionId!);
       req = req.clone({
-        params: new HttpParams({ fromString: `session_id=${this.sessionId}` }),
+        params: newParams,
       });
     }
 

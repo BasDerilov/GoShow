@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -16,12 +15,13 @@ import { LoginComponent } from './login/login.component';
 import { JwtInterceptor } from './interceptors/jwt-interceptor';
 import { ApiTokenInterceptor } from './interceptors/api-token-interceptor';
 import { UserComponent } from './user/user.component';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MovieCardComponent } from './browse/movie-card/movie-card.component';
 import { FilterComponent } from './browse/filter/filter.component';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 @NgModule({
   declarations: [
@@ -46,6 +46,8 @@ import { FilterComponent } from './browse/filter/filter.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
+    CollapseModule.forRoot(),
+    AutocompleteLibModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -21,6 +21,7 @@
     "@fortawesome/angular-fontawesome": "^0.11.1",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "angular-ng-autocomplete": "^2.0.12",
     "bootstrap": "^5.2.2",
     "ngx-bootstrap": "^9.0.0",
     "rxjs": "~7.5.0",

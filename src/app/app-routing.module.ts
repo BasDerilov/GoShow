@@ -1,3 +1,4 @@
+import { DetailsComponent } from './browse/details/details.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowseComponent } from './browse/browse.component';
@@ -21,6 +22,8 @@ const routes: Routes = [
     path: 'browse',
     component: BrowseComponent,
   },
+  { path: 'movies/:id', component: DetailsComponent },
+  { path: 'tv/:id', component: DetailsComponent },
   {
     path: '**',
     pathMatch: 'full',

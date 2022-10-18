@@ -11,10 +11,9 @@
             <input
               type="text"
               id="user-input"
-              class="form-control form-control-lg border-secondary bg-transparent"
+              class="form-control form-control-lg"
               [ngClass]="{
-                'is-invalid border-danger': !credentialsValid,
-                'border-secondary': credentialsValid
+                'is-invalid border-danger': !credentialsValid
               }"
               placeholder="Enter user name"
               formControlName="username"
@@ -26,10 +25,9 @@
             <input
               type="password"
               id="password-input"
-              class="form-control form-control-lg border-secondary"
+              class="form-control form-control-lg"
               [ngClass]="{
-                'is-invalid border-danger': !credentialsValid,
-                'border-secondary': credentialsValid
+                'is-invalid border-danger': !credentialsValid
               }"
               placeholder="Enter password"
               formControlName="password"
@@ -40,7 +38,7 @@
           <div class="d-flex justify-content-between align-items-center">
             <div class="form-check mb-0">
               <input
-                class="form-check-input me-2 border-secondary"
+                class="form-check-input me-2 border"
                 type="checkbox"
                 value=""
                 id="remember-me"

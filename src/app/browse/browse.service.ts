@@ -1,19 +1,37 @@
+import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Movie } from '../shared/movie.model';
+import { ApiPaths } from 'src/environments/environment';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BrowseService {
-  constructor(private http: HttpClient) {}
+  page = new BehaviorSubject<Page>({});
 
-  load() {
-    return this.http.get<{
-      page: number;
-      results: Movie[];
-      total_results: number;
-      total_pages: number;
-    }>('https://api.themoviedb.org/3/discover/movie');
+  constructor(private http: HttpClient) {
+    this.load();
   }
+
+  load(params?: HttpParams) {
+    this.http
+      .get<Page>(
+        `${environment.baseUrl}${ApiPaths.Discover}${ApiPaths.Movie}`,
+        {
+          params: params,
+        }
+      )
+      .subscribe((pageResp) => {
+        this.page.next(pageResp);
+      });
+  }
+}
+
+interface Page {
+  page?: number;
+  results?: Movie[];
+  total_results?: number;
+  total_pages?: number;
 }

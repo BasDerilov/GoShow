@@ -17,8 +17,9 @@ export class ApiTokenInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    const newParams = req.params.append('api_key', this.API_KEY);
     req = req.clone({
-      params: new HttpParams({ fromString: `api_key=${this.API_KEY}` }),
+      params: newParams,
     });
 
     return next.handle(req);
