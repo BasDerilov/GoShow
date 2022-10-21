@@ -1,4 +1,4 @@
-export interface Actor {
+export interface Person {
   birthday?: null | string;
   known_for_department?: string;
   deathday?: null | string;

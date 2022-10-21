@@ -1,0 +1,151 @@
+<div
+  *ngIf="movie"
+  class="row justify-content-center align-items-center g-2 mb-3"
+>
+  <div class="col bg-primary text-center position-relative p-0">
+    <img class="img-fluid w-75 position-relative" [src]="backdropPath" alt="" />
+    <div
+      class="bg-opacity-75 position-absolute bottom-0 w-100 text-start bg-black px-3 py-2"
+    >
+      <div class="row">
+        <div class="col">
+          <h3>
+            {{ movie.title }} ({{ movie.release_date!.split("-", 1)[0] }})
+          </h3>
+          <p class="mb-0">
+            {{ movie.tagline }}
+          </p>
+        </div>
+        <div *ngIf="movie.vote_average" class="col-3">
+          <div class="row">
+            <span
+              >Rating:
+              <span
+                [ngClass]="{
+                  'text-secondary': movie.vote_average >= 6,
+                  'text-teretriary':
+                    movie.vote_average < 6 && movie.vote_average >= 3,
+                  'text-danger': movie.vote_average < 3
+                }"
+                >{{ movie.vote_average }}</span
+              ></span
+            >
+          </div>
+          <div class="row">
+            <span
+              >Votes: <span>{{ movie.vote_count }}</span></span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-rate-favorite
+  *ngIf="user && movie"
+  mediaType="movie"
+  [media]="movie"
+></app-rate-favorite>
+<div *ngIf="movie" class="row border rounded p-2 p-md-3 p-xxl-5 m-0 mb-3">
+  <div class="col">
+    <h4>Overview</h4>
+    <p>{{ movie.overview }}</p>
+  </div>
+  <div
+    *ngIf="movie.budget || movie.revenue || movie.popularity"
+    class="col-4 border-start"
+  >
+    <div class="row">
+      <div *ngIf="movie.budget || movie.revenue" class="col">
+        <div *ngIf="movie.budget">
+          <h6 class="mb-0">Budget:</h6>
+          <span class="text-secondary"
+            >$ {{ movie.budget.toLocaleString() }}</span
+          >
+        </div>
+        <div *ngIf="movie.revenue">
+          <h6 class="mb-0">Revenue:</h6>
+          <span class="text-secondary"
+            >$ {{ movie.revenue.toLocaleString() }}</span
+          >
+        </div>
+      </div>
+      <div *ngIf="movie.popularity" class="col">
+        <h6 class="mb-0">Popularity score:</h6>
+        <span class="text-secondary">{{ movie.popularity }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center align-items-center g-2">
+    <div *ngIf="movie.budget" class="col">
+      <h4>Genres</h4>
+      <span
+        *ngFor="let genre of movie.genres"
+        class="badge me-1 text-bg-secondary"
+        >{{ genre.name }}</span
+      >
+    </div>
+    <div class="col">
+      <h5>Produced by</h5>
+      <span
+        *ngFor="let company of movie.production_companies"
+        class="badge rounded-pill bg-secondary text-primary me-1"
+        >{{ company.name }}</span
+      >
+    </div>
+    <div *ngIf="movie.release_date" class="col">
+      <h5>Release date</h5>
+      <span class="text-secondary">{{
+        asDate(movie.release_date).toDateString()
+      }}</span>
+    </div>
+  </div>
+</div>
+
+<div class="row justify-content-center align-items-center g-2">
+  <div *ngIf="cast" class="col mb-5">
+    <div class="col-12">
+      <h4 class="border-bottom pb-1 mb-3">Cast</h4>
+
+      <carousel
+        [itemsPerSlide]="6"
+        [singleSlideOffset]="true"
+        [interval]="0"
+        [showIndicators]="false"
+      >
+        <slide class="" *ngFor="let actor of cast">
+          <a class="" [routerLink]="['/details', 'person', actor.id]"
+            ><div *ngIf="actor.profile_path" class="text-center p-0">
+              <img
+                [src]="getMemberProfilePic(actor.profile_path)"
+                class="img-fluid"
+                alt=""
+              />
+            </div>
+            <div
+              *ngIf="!actor.profile_path"
+              class="text-center align-text-bottom"
+            >
+              <fa-icon
+                class="fs-1 text-secondary"
+                [icon]="profilePicMissingIcon"
+              ></fa-icon>
+              <div>
+                <p class="text-secondary">image missing from database</p>
+              </div>
+            </div>
+            <div
+              class="text-light bg-opacity-75 position-absolute bottom-0 w-100 text-start bg-black px-1"
+            >
+              <h5 class="d-none d-lg-block mb-1">{{ actor.name }}</h5>
+              <p class="mb-0 d-none d-md-block">
+                {{ actor.character }}
+              </p>
+            </div>
+          </a>
+        </slide>
+      </carousel>
+    </div>
+  </div>
+</div>
+<app-reviews *ngIf="movie" [id]="movie.id" [mediaType]="'movie'"></app-reviews>

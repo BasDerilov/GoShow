@@ -1,13 +1,12 @@
+import { Company } from './company.model';
+import { Genre } from './genre.mode';
+import { Language } from './language.model';
+
 export interface Movie {
   adult?: boolean;
   backdrop_path?: string | null;
   budget?: number;
-  genres?: [
-    {
-      id: number;
-      name: string;
-    }
-  ];
+  genres?: Genre[];
   id?: number;
   name?: string;
   homepage?: string;
@@ -16,33 +15,17 @@ export interface Movie {
   overview?: string | null;
   popularity?: number;
   poster_path?: string | null;
-  production_companies?: [
-    {
-      name?: string;
-      id?: number;
-      logo_path: string | null;
-      origin_country: string;
-    }
-  ];
-  production_countries?: [
-    {
-      iso_3166_1: string;
-      name: string;
-    }
-  ];
+  production_companies?: Company[];
+  production_countries?: Movie[];
   release_date?: string; //Date format
   revenue?: number;
   runtime?: number | null;
-  spoken_languages?: [
-    {
-      iso_639_1?: string;
-      name?: string;
-    }
-  ];
+  spoken_languages?: Language[];
   status?: string;
   tagline?: string | null;
   title?: string;
   video?: boolean;
   vote_average?: number;
   vote_count?: number;
+  rating?: number;
 }

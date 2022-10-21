@@ -1,0 +1,8 @@
+<a
+  *ngIf="media && isMovie !== undefined"
+  [routerLink]="['/details', isMovie ? 'movie' : 'tv', media.id]"
+>
+  <div class="border border-secondary rounded p-1">
+    <img class="img-fluid" [src]="getImage()" />
+  </div>
+</a>

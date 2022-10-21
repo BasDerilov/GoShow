@@ -1,0 +1,58 @@
+<div class="row container mb-3">
+  <h5 *ngIf="!userRating" class="text-muted">Submit your rating</h5>
+  <form
+    *ngIf="!userRating"
+    [formGroup]="rateForm"
+    (ngSubmit)="onSubmit(rateForm)"
+  >
+    <div class="row">
+      <div class="col-2">
+        <div class="input-group">
+          <input
+            [ngClass]="{
+              'is-invalid':
+                !rateForm.get('rating')!.valid && rateForm.get('rating')!.dirty
+            }"
+            class="form-control form-control-sm"
+            type="number"
+            min="1"
+            max="10"
+            formControlName="rating"
+          />
+          <span
+            [ngClass]="{
+              'border-danger':
+                !rateForm.get('rating')!.valid && rateForm.get('rating')!.dirty
+            }"
+            class="input-group-text text-bg-primary"
+            >/10</span
+          >
+        </div>
+      </div>
+      <div class="col-5">
+        <button
+          class="btn btn-outline-secondary"
+          [disabled]="!rateForm.get('rating')!.valid"
+          type="submit"
+        >
+          submit
+        </button>
+      </div>
+    </div>
+  </form>
+  <div *ngIf="userRating" class="col">
+    <Span>Your rated this:</Span>
+    <p class="text-secondary">{{ userRating }}/10</p>
+    <button (click)="onDeleteRating()" class="btn btn-teretriary btn-sm">
+      Remove rating
+    </button>
+  </div>
+  <div class="col text-end">
+    <button
+      (click)="onAddToFavorites()"
+      class="btn btn-outline-secondary active"
+    >
+      <fa-icon class="fs-4" [icon]="startIcon"></fa-icon>
+    </button>
+  </div>
+</div>

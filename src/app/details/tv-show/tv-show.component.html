@@ -1,0 +1,133 @@
+<div
+  *ngIf="tvShow"
+  class="row justify-content-center align-items-center g-2 mb-3"
+>
+  <div class="col bg-primary text-center position-relative p-0">
+    <img class="img-fluid w-75 position-relative" [src]="backdropPath" alt="" />
+    <div
+      class="bg-opacity-75 position-absolute bottom-0 w-100 text-start bg-black px-3 py-2"
+    >
+      <div class="row">
+        <div class="col">
+          <h3>
+            {{ tvShow.name }}
+          </h3>
+          <p class="mb-0">
+            {{ tvShow.tagline }}
+          </p>
+        </div>
+        <div *ngIf="tvShow.vote_average" class="col-3">
+          <div class="row">
+            <span
+              >Rating:
+              <span
+                [ngClass]="{
+                  'text-secondary': tvShow.vote_average >= 6,
+                  'text-teretriary':
+                    tvShow.vote_average < 6 && tvShow.vote_average >= 3,
+                  'text-danger': tvShow.vote_average < 3
+                }"
+                >{{ tvShow.vote_average }}</span
+              ></span
+            >
+          </div>
+          <div class="row">
+            <span
+              >Votes: <span>{{ tvShow.vote_count }}</span></span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-rate-favorite
+  *ngIf="tvShow && user"
+  mediaType="tv"
+  [media]="tvShow"
+></app-rate-favorite>
+<div *ngIf="tvShow" class="row border rounded p-2 p-md-3 p-xxl-5 m-0 mb-3">
+  <div class="col">
+    <h4>Overview</h4>
+    <p>{{ tvShow.overview }}</p>
+  </div>
+  <div *ngIf="tvShow" class="col-4 border-start"></div>
+  <div class="row justify-content-center align-items-center g-2">
+    <div *ngIf="tvShow.genres" class="col">
+      <h4>Genres</h4>
+      <span
+        *ngFor="let genre of tvShow.genres"
+        class="badge me-1 text-bg-secondary"
+        >{{ genre.name }}</span
+      >
+    </div>
+    <div class="col">
+      <h5>Produced by</h5>
+      <span
+        *ngFor="let company of tvShow.production_companies"
+        class="badge rounded-pill bg-secondary text-primary me-1"
+        >{{ company.name }}</span
+      >
+    </div>
+    <div *ngIf="tvShow.first_air_date" class="col">
+      <h5>Started airing on</h5>
+      <span class="text-secondary">{{
+        asDate(tvShow.first_air_date).toDateString()
+      }}</span>
+    </div>
+    <div class="col" *ngIf="tvShow.last_air_date">
+      <h5>Last air date</h5>
+      <span class="text-secondary">{{
+        asDate(tvShow.last_air_date).toDateString()
+      }}</span>
+    </div>
+  </div>
+</div>
+
+<div class="row justify-content-center align-items-center g-2">
+  <div *ngIf="cast" class="col mb-5">
+    <div class="col-12">
+      <h4 class="border-bottom pb-1 mb-3">Cast</h4>
+
+      <carousel
+        [itemsPerSlide]="6"
+        [singleSlideOffset]="true"
+        [interval]="0"
+        [showIndicators]="false"
+      >
+        <slide class="" *ngFor="let actor of cast">
+          <a class="" [routerLink]="['/details', 'person', actor.id]"
+            ><div *ngIf="actor.profile_path" class="text-center p-0">
+              <img
+                [src]="getProfile(actor.profile_path)"
+                class="img-fluid"
+                alt=""
+              />
+            </div>
+            <div
+              *ngIf="!actor.profile_path"
+              class="text-center align-text-bottom"
+            >
+              <fa-icon
+                class="fs-1 text-secondary"
+                [icon]="profilePicMissingIcon"
+              ></fa-icon>
+              <div>
+                <p class="text-secondary">image missing from database</p>
+              </div>
+            </div>
+            <div
+              class="text-light bg-opacity-75 position-absolute bottom-0 w-100 text-start bg-black px-1"
+            >
+              <h5 class="d-none d-lg-block mb-1">{{ actor.name }}</h5>
+              <p class="mb-0 d-none d-md-block">
+                {{ actor.character }}
+              </p>
+            </div>
+          </a>
+        </slide>
+      </carousel>
+    </div>
+  </div>
+  <app-reviews *ngIf="tvShow" [id]="tvShow.id" [mediaType]="'tv'"></app-reviews>
+</div>

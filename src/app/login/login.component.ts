@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
     const remember = loginForm.get('rememberMe')?.value;
     this.isLoading = true;
 
-    this._login.login(username, password).subscribe((loginResult) => {
+    this._login.sessionId(username, password).subscribe((loginResult) => {
       this.isLoading = false;
       if (loginResult.success) {
         this.credentialsValid = true;
@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
           {
             username: username,
             sessionId: loginResult.sessionId!,
+            account: loginResult.account,
           },
           remember
         );

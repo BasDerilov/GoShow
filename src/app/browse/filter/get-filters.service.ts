@@ -1,11 +1,11 @@
-import { Movie } from 'src/app/shared/movie.model';
+import { Movie } from 'src/app/shared/models/movie.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Genre } from './genre.mode';
+import { Genre } from '../../shared/models/genre.mode';
 import { ApiPaths } from 'src/environments/environment';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs';
-import { Actor } from 'src/app/shared/actor.model';
+import { Person } from 'src/app/shared/models/person.model';
 
 @Injectable({
   providedIn: 'root',
@@ -47,6 +47,6 @@ export class GetFiltersService {
   getActorsByKeyword(keyword: string) {
     const url = `${environment.baseUrl}${ApiPaths.Search}${ApiPaths.People}`;
     const params = new HttpParams({ fromObject: { query: keyword } });
-    return this.http.get<{ results: Actor[] }>(url, { params: params });
+    return this.http.get<{ results: Person[] }>(url, { params: params });
   }
 }

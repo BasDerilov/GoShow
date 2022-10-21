@@ -1,10 +1,11 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { Actor } from 'src/app/shared/actor.model';
+import { Person } from 'src/app/shared/models/person.model';
 import { BrowseService } from '../browse.service';
-import { Genre } from './genre.mode';
+import { Genre } from '../../shared/models/genre.mode';
 import { GetFiltersService } from './get-filters.service';
+import { ApiPaths } from 'src/environments/environment';
 
 @Component({
   selector: 'app-filter',
@@ -12,10 +13,11 @@ import { GetFiltersService } from './get-filters.service';
   styleUrls: ['./filter.component.scss'],
 })
 export class FilterComponent implements OnInit {
-  @Input() isColapsed = false;
+  @Input() isColapsed = true;
+  @Input() mediaType?: string;
 
   genres: Genre[] = [];
-  actors: Actor[] = [];
+  actors: Person[] = [];
   yearRange: number[] = [];
   ratingRange = Array.from<number, number>({ length: 10 }, (v, k) => k + 1);
 
@@ -28,7 +30,7 @@ export class FilterComponent implements OnInit {
     yearRangeEnd: null,
     ratingRangeStart: null,
     ratingRangeEnd: null,
-    selectedActors: this.formBuilder.array<Actor>([]),
+    selectedActors: this.formBuilder.array<Person>([]),
   });
 
   constructor(
@@ -123,7 +125,7 @@ export class FilterComponent implements OnInit {
     }
   }
 
-  removeFromActors(actor: Actor) {
+  removeFromActors(actor: Person) {
     const index = this.selectedActors.controls.findIndex(
       (control) => control.value === actor
     );
@@ -169,11 +171,16 @@ export class FilterComponent implements OnInit {
       }
     });
 
-    this.browseService.load(params);
+    if (this.mediaType === 'movie') {
+      this.browseService.load(ApiPaths.Movie, params);
+    } else if (this.mediaType === 'tv') {
+      this.browseService.load(ApiPaths.Tv, params);
+    }
+
     console.log(this.filterForm.value);
   }
 
-  private _concatIds(filtersArr: Genre[] | Actor[]) {
+  private _concatIds(filtersArr: Genre[] | Person[]) {
     return filtersArr.map((value) => value.id).toString();
   }
 }

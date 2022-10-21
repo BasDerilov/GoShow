@@ -1,6 +1,6 @@
-<div>
+<div class="mt-4">
   <div>
-    <app-filter #filters></app-filter>
+    <app-filter #filters [mediaType]="isMovies ? 'movie' : 'tv'"></app-filter>
     <div class="d-grid gap-2">
       <button
         type="button"
@@ -11,12 +11,29 @@
       </button>
     </div>
   </div>
-  <div class="row">
+  <div *ngIf="movies && isMovies" class="row justify-content-center mb-3">
+    <div *ngFor="let movie of movies" class="col-5 col-md-2 p-1 p-md-2">
+      <app-movie-card [media]="movie" [isMovie]="true"></app-movie-card>
+    </div>
+  </div>
+  <div *ngIf="tvShows && !isMovies" class="row justify-content-center mb-3">
     <div
-      *ngFor="let movie of movies"
+      *ngFor="let show of tvShows"
       class="col-4 col-md-3 col-xl-2 p-1 p-md-2"
     >
-      <app-movie-card *ngIf="movie" [movie]="movie"></app-movie-card>
+      <app-movie-card [media]="show" [isMovie]="false"></app-movie-card>
+    </div>
+  </div>
+  <div class="row" *ngIf="pages && page">
+    <div class="col-12">
+      <pagination
+        *ngIf="page"
+        [maxSize]="5"
+        (pageChanged)="onPageChange($event)"
+        [totalItems]="pages"
+        class="justify-content-center"
+        [(ngModel)]="page"
+      ></pagination>
     </div>
   </div>
 </div>

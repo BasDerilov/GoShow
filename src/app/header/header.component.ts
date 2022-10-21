@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
   constructor(private _userService: UserService) {}
 
   ngOnInit(): void {
-    this._userService.userSubj.subscribe((user) => {
+    this._userService.user.subscribe((user) => {
       this.currentUser = user;
     });
   }

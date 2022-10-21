@@ -1,57 +1,51 @@
-<form>
+<form class="mb-3" [formGroup]="search" (ngSubmit)="onSearch(search)">
   <div class="input-group mb-3">
     <input
       class="form-control border-secondary"
       placeholder="search by name..."
       type="text"
       aria-describedby="search-button"
+      formControlName="query"
     />
-    <span id="search-button" class="btn btn-outline-secondary btn-lg"
-      ><fa-icon [icon]="searchIcon"></fa-icon
-    ></span>
+    <button
+      type="submit"
+      id="search-button"
+      class="btn btn-outline-secondary btn-lg"
+    >
+      <fa-icon [icon]="searchIcon"></fa-icon>
+    </button>
   </div>
   <div class="input-group d-flex justify-content-center">
     <div class="btn-group">
       <input
         type="radio"
         class="btn-check"
-        name="categories"
         id="movies-option"
         autocomplete="off"
-        checked
+        value="movie"
+        formControlName="mediaType"
       />
       <label class="btn btn-outline-secondary" for="movies-option"
         >Movies</label
       >
-
       <input
         type="radio"
         class="btn-check"
-        name="categories"
         id="TV-option"
         autocomplete="off"
+        value="tv"
+        formControlName="mediaType"
       />
       <label class="btn btn-outline-secondary" for="TV-option">TV Shows</label>
-
-      <input
-        type="radio"
-        class="btn-check"
-        name="categories"
-        id="actors-option"
-        autocomplete="off"
-      />
-      <label class="btn btn-outline-secondary" for="actors-option"
-        >Actors</label
-      >
-
-      <input
-        type="radio"
-        class="btn-check"
-        name="categories"
-        id="all-option"
-        autocomplete="off"
-      />
-      <label class="btn btn-outline-secondary" for="all-option">All</label>
     </div>
   </div>
 </form>
+
+<div class="row" *ngIf="results">
+  <div class="col-3 mb-3" *ngFor="let media of results">
+    <app-movie-card
+      [media]="media"
+      [isMovie]="selectedMedia === 'movie'"
+    ></app-movie-card>
+  </div>
+</div>

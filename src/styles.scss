@@ -35,6 +35,20 @@ $body-color: $accent;
 $color-contrast-dark: $dark;
 $color-contrast-light: $accent;
 
+$pagination-color: $secondary;
+$pagination-bg: $primary;
+
+$pagination-focus-color: $primary;
+$pagination-focus-bg: $secondary;
+
+$pagination-hover-color: $primary;
+$pagination-hover-bg: tint-color($secondary, 30);
+
+$pagination-active-color: $primary;
+$pagination-active-bg: $secondary;
+
+$pagination-disabled-bg: darken($primary, 5);
+
 :root {
   color-scheme: dark;
 }

@@ -1,0 +1,22 @@
+<h4 *ngIf="reviews?.length">Reviews</h4>
+<div class="row mb-4">
+  <div *ngFor="let review of reviews" class="col-12 g-3 card bg-primary p-3">
+    <div *ngIf="review.author_details" class="row border-bottom pb-3">
+      <div class="col-1" *ngIf="review.author_details.avatar_path">
+        <img
+          class="img-fluid img-thumbnail rounded"
+          [src]="getAvatar(review.author_details.avatar_path)"
+        />
+      </div>
+      <div *ngIf="review.author" class="col">
+        <h6>{{ review.author }}</h6>
+      </div>
+      <div *ngIf="review.author_details.rating" class="col-2">
+        <span>Rated: </span>
+        <span class="text-secondary">{{ review.author_details.rating }}</span
+        ><span>/10</span>
+      </div>
+    </div>
+    <div class="mt-3" [innerHTML]="review.content"></div>
+  </div>
+</div>

@@ -1,0 +1,127 @@
+<div *ngIf="person">
+  <div class="row mb-3 justify-content-center">
+    <div *ngIf="person.profile_path" class="col-9 col-md-3 mb-3">
+      <img [src]="profilePic" class="img-fluid img-thumbnail" alt="" />
+    </div>
+    <div
+      *ngIf="!person.profile_path"
+      class="col-9 col-md-3 text-center img-thumbnail mb-3"
+    >
+      <div class="my-5">
+        <fa-icon class="fs-1" [icon]="missinImageIcon"></fa-icon>
+      </div>
+    </div>
+    <div class="col-9">
+      <h3 *ngIf="person.name">{{ person.name }}</h3>
+      <dl class="row">
+        <dt *ngIf="person.birthday" class="col-sm-3">Date of birth</dt>
+        <dd *ngIf="person.birthday" class="col-sm-9">
+          {{ asDate(person.birthday!).toDateString() }}
+        </dd>
+        <dt *ngIf="person.deathday" class="col-sm-3">Date of death</dt>
+        <dd *ngIf="person.deathday" class="col-sm-9">
+          {{ asDate(person.deathday!).toDateString() }}
+        </dd>
+        <dt *ngIf="person.place_of_birth" class="col-sm-3">Place of birth</dt>
+        <dd *ngIf="person.place_of_birth" class="col-sm-9">
+          {{ person.place_of_birth }}
+        </dd>
+        <dt *ngIf="person.known_for_department" class="col-sm-3 text-truncate">
+          Known for
+        </dt>
+        <dd *ngIf="person.known_for_department" class="col-sm-9">
+          {{ person.known_for_department }}
+        </dd>
+        <dt *ngIf="person.gender" class="col-sm-3">Gender</dt>
+        <dd *ngIf="person.gender" class="col-sm-9">
+          {{ genders[person.gender] }}
+        </dd>
+        <dt *ngIf="person.popularity" class="col-sm-3">Popularity</dt>
+        <dd *ngIf="person.popularity" class="col-sm-9">
+          {{ person.popularity }}
+        </dd>
+      </dl>
+
+      <div *ngIf="person.biography" class="border-top pt-3">
+        <h4>Biography</h4>
+        <p>{{ person.biography }}</p>
+      </div>
+    </div>
+  </div>
+  <h4>Media {{ person.name }} has starred in</h4>
+  <div class="row">
+    <carousel
+      *ngIf="creditsAsCast"
+      [itemsPerSlide]="6"
+      [singleSlideOffset]="true"
+      [interval]="0"
+      [showIndicators]="false"
+    >
+      <slide *ngFor="let credit of creditsAsCast">
+        <a [routerLink]="['/details', credit.media_type, credit.id]">
+          <div>
+            <img
+              *ngIf="credit.poster_path"
+              [src]="getPoster(credit.poster_path)"
+              class="img-fluid"
+            />
+            <div
+              class="text-light text-center position-relative"
+              *ngIf="!credit.poster_path"
+            >
+              <img
+                class="img-fluid"
+                src="http://image.tmdb.org/t/p/original/3y6nBaPHyJalv8MABJ6C7a7hh1l.jpg"
+                style="opacity: 0%"
+                alt=""
+              />
+              <h5 class="mt-auto position-absolute bottom-0">
+                {{ credit.title }}
+              </h5>
+            </div>
+          </div>
+        </a>
+      </slide>
+    </carousel>
+  </div>
+  <div class="row" *ngIf="creditsAsCrew">
+    <h4 *ngIf="filterUglyCreds(creditsAsCrew).length" class="mt-3">
+      Behind the scenes experience
+    </h4>
+    <div class="row">
+      <a
+        class="col-md-6 col-xl-4 g-3 text-light text-decoration-none"
+        style="cursor: pointer"
+        *ngFor="let credit of filterUglyCreds(creditsAsCrew)"
+        #card
+        [routerLink]="['/details', credit.media_type, credit.id]"
+      >
+        <div class="card h-100 border-0">
+          <div class="card-body bg-primary border rounded">
+            <div class="row">
+              <div class="col">
+                <h4 *ngIf="credit.title" class="card-title">
+                  {{ credit.title }}
+                </h4>
+                <p class="card-text">{{ credit.job }}</p>
+                <div *ngIf="credit.release_date">
+                  <h6 class="mb-0">Release date</h6>
+                  <span class="text-secondary">{{ credit.release_date }}</span>
+                </div>
+                <div *ngIf="credit.vote_average && credit.vote_count">
+                  <h6 class="mb-0">Rating</h6>
+                  <span class="text-secondary">{{ credit.vote_average }}</span>
+                  <h6 class="mb-0">Votes</h6>
+                  <span class="text-secondary">{{ credit.vote_count }}</span>
+                </div>
+              </div>
+              <div class="col-5 border-start" *ngIf="credit.poster_path">
+                <img class="img-fluid" [src]="getPoster(credit.poster_path)" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>

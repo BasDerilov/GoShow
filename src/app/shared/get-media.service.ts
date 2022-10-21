@@ -16,17 +16,18 @@ export class GetMediaService {
     if (config) {
       this.configuration = config;
     } else {
-      console.log('Fetching configuration');
-
-      this.getConfiguration().subscribe((config) => {
-        this.configuration = config;
-        _local.saveData('image-configuration', config);
-      });
+      this.getConfiguration();
     }
   }
 
   private getConfiguration() {
-    return this._http.get<Configuration>(this.URL + 'configuration');
+    console.log('Fetching configuration');
+    return this._http
+      .get<Configuration>(this.URL + 'configuration')
+      .subscribe((config) => {
+        this.configuration = config;
+        this._local.saveData('image-configuration', config);
+      });
   }
 
   getPoster(url: string, size?: number) {
@@ -45,6 +46,14 @@ export class GetMediaService {
     return this.getMedia(url, this.configuration!.images.backdrop_sizes[size]);
   }
 
+  getProfilePic(url: string) {
+    if (!this.configuration) {
+      this.getConfiguration();
+    }
+
+    return this.getMedia(url, this.configuration!.images.profile_sizes[2]);
+  }
+
   private getMedia(url: string, size: string) {
     if (this.configuration) {
       return this.configuration.images.base_url + size + url;
@@ -57,11 +66,11 @@ interface Configuration {
   images: {
     base_url: string;
     secure_base_url: string;
-    backdrop_sizes: [string];
-    logo_sizes: [string];
-    poster_sizes: [string];
-    profile_sizes: [string];
-    strill_sizes: [string];
+    backdrop_sizes: string[];
+    logo_sizes: string[];
+    poster_sizes: string[];
+    profile_sizes: string[];
+    strill_sizes: string[];
   };
   change_keys: [string];
 }

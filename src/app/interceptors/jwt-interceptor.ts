@@ -3,21 +3,19 @@ import {
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
-  HttpParams,
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LoginService } from '../login/login.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
   sessionId?: string;
 
   constructor(private _userService: UserService) {
-    this._userService.userSubj.subscribe((user) => {
-      if (user) {
-        this.sessionId = user.sessionId;
+    this._userService.user.subscribe((session) => {
+      if (session) {
+        this.sessionId = session.sessionId;
       }
     });
   }
