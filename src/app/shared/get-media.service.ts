@@ -56,7 +56,7 @@ export class GetMediaService {
 
   private getMedia(url: string, size: string) {
     if (this.configuration) {
-      return this.configuration.images.base_url + size + url;
+      return this.configuration.images.secure_base_url + size + url;
     }
     throw new Error('Config file hasnt loaded');
   }
